@@ -8,24 +8,6 @@ const connectDB = async () => {
       throw new Error("MONGODB_URL is not set in the environment.");
     }
 
-    const credentials = mongoUrl.match(
-      /^mongodb(?:\+srv)?:\/\/([^:/@]+):([^@]+)@/i
-    );
-    if (
-      credentials &&
-      credentials
-        .slice(1)
-        .some((value) =>
-          /^(?:<[^>]+>|(?:your[-_ ]?)?(?:username|password|user|pass))$/i.test(
-            decodeURIComponent(value)
-          )
-        )
-    ) {
-      throw new Error(
-        "MONGODB_URL still contains a username or password placeholder. Replace it with your Atlas database user's credentials in .env."
-      );
-    }
-
     const connectionInstance = await mongoose.connect(mongoUrl, {
       dbName: DB_NAME,
     });
