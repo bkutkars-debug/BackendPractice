@@ -5,7 +5,7 @@ import fs from "fs"
 cloudinary.config({ 
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
   api_key: process.env.CLOUDINARY_API_KEY, 
-  api_secret: 'process.env.CLOUDINARY_API_SECRET'
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 const uploadOnCloudinary = async (localFilePath) => {
     try {
@@ -16,15 +16,12 @@ const uploadOnCloudinary = async (localFilePath) => {
         })
         //file has been uploaded 
         console.log("file is uploaded on cluodinary",response.url);
-        return response;
         fs.unlinkSync(localFilePath) // REMOVE THE LOCAL SAVED TEMPRORY FILE AS THE OOPS ULPOADE 
-        return null;
+        return response;
 
     }catch (error) {
-
+        throw error;
     }
 }
 
 export {uploadOnCloudinary}
-
-
